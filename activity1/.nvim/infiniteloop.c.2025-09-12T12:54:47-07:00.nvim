@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+#creatre one infinite loop calling sleep() with some sleep value
+
+int main(){
+while(true){
+sleep(10);
+
+}
+
+return 0;
+}
