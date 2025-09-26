@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define _POSIX_C_SOURCE 200809L
+#define MAX_LEN 5
+
+int historyCount = 0;
+char *history[MAX_LEN];
+/* recieve user input line by line; each input can be an array of characters
+ * stores the last 5 inputs
+ * prints the last 5 inputs when the user provides "print", input "prints"
+ * counts as the last input
+ */
+
+char *get_input() {
+  char *buffer = NULL;
+  size_t buffersize = 0;
+  printf("Enter input: ");
+  ssize_t len = getline(&buffer, &buffersize, stdin);
+  if (len == -1)
+    exit(1);
+  buffer[len - 1] = '\0';
+  return buffer;
+}
+
+void addHistory(char *input) {
+  if (historyCount < MAX_LEN) {
+    history[historyCount++] = input;
+  } else {
+    free(history[0]);
+    for (int i = 1; i < MAX_LEN; i++) {
+      history[i - 1] = history[i];
+    }
+    history[MAX_LEN - 1] = input;
+  }
+}
+
+void print_history() {
+  printf("History: \n");
+  for (int i = 0; i < historyCount; i++) {
+    printf("%s,\n", history[i]);
+  }
+}
+
+int main() {
+  while (1) {
+    char *input = get_input();
+    addHistory(input);
+    if (strcmp(input, "print") == 0) {
+      print_history();
+    }
+  }
+  return 0;
+}

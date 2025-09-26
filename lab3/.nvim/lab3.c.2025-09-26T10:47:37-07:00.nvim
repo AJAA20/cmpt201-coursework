@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+/* recieve user input line by line; each input can be an array of characters
+ * stores the last 5 inputs
+ * prints the last 5 inputs when the user provides "print", input "prints"
+ * counts as the last input
+ */
+
+
+
+int main() {
+  char *arr = [5];
+
+  char *line = NULL; // initilize line ptr to NULL
+  size_t len = 0;    // initialize buffer size to 0
+  ssize_t read;      // store num of characters read
+
+  printf("Enter input: \n");
+  read = getline(&line, &len, stdin);
+  while (read != "print") {
